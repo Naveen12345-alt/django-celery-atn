@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +28,24 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+ASGI_APPLICATION = 'logint2.asgi.application'
+# CHANNELS SETTINGS
+CHANNEL_LAYERS = {
+"default": {
+"BACKEND": "channels_redis.core.RedisChannelLayer",
+"CONFIG": {
+"hosts": [("localhost", 6379)],
+},
+},
+}
+# CELERY TASK STUFF
+BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Kolkata'
+
 
 # Application definition
 
@@ -38,9 +57,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'channels',
+    'django_filters',
     'account',
     'taskr',
-    'django_filters'
 ]
 
 REST_FRAMEWORK = {
