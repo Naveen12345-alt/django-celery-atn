@@ -1,6 +1,12 @@
 from django.conf.urls import url
 from django.urls import path, include
-from .api import NotificationListApi, TaskCreateApi, TaskDeleteApi, TaskListApi, TaskUpdateApi
+from .views import (
+    NotificationListApi,
+    TaskCreateApi,
+    TaskDeleteApi,
+    TaskListApi,
+    TaskUpdateApi,
+)
 
 urlpatterns = [
     path("api/create", TaskCreateApi.as_view()),
